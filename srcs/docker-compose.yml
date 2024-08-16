@@ -4,9 +4,13 @@ services:
       container_name: my_nginx
       build:
         context: ./requirements/nginx/
+        args:
+          - DOMAIN_NAME=${DOMAIN_NAME}
+      image: nginx #assigns the image name
       ports:
-        - "443:443"
+        #- "443:443"
         - "8080:8080"
+      restart: unless-stopped #restart container if crashes
       expose:
         - "9000"
       environment:
