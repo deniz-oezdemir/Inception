@@ -2,14 +2,14 @@
 FROM debian:bullseye
 
 # Set the MySQL database name, password, and user as build arguments - delete before submitting!
-ARG MYSQL_DATABASE
+ARG DB_NAME
 ARG MYSQL_PASSWORD
-ARG MYSQL_USER
+ARG DB_USER
 
 # Set the MySQL database name, password, and user as environment variables - delete before submitting!
-ENV MYSQL_DATABASE=$MYSQL_DATABASE
+ENV DB_NAME=$DB_NAME
 ENV MYSQL_PASSWORD=$MYSQL_PASSWORD
-ENV MYSQL_USER=$MYSQL_USER
+ENV DB_USER=$DB_USER
 
 # Set the port for the container to listen on
 EXPOSE 3306
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends --no-install-su
 	&& rm -rf /var/lib/apt/lists/*
 
 # Print the MySQL user for debugging purposes
-RUN echo -e "$MYSQL_USER"
+RUN echo -e "$DB_USER"
 
 RUN service mariadb start
 
@@ -36,9 +36,9 @@ RUN sleep 5
 # Start the MySQL server, create a database, user, and grant privileges
 RUN mysqld --bind-address=0.0.0.0 & \
 	sleep 5 && \
-	mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;" && \
-	mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" && \
-	mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%';" && \
+	mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;" && \
+	mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';" && \
+	mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';" && \
 	mysql -e "FLUSH PRIVILEGES;"
 
 RUN sleep 5
