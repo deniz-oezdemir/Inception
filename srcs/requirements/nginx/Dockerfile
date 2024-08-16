@@ -10,7 +10,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:4096 \
 	-out /etc/ssl/certs/nginx-selfsigned.crt \
 	-subj "/C=DE/ST=Berlin/L=Berlin/O=42_Berlin/OU=Student/CN=denizozd"
 
-# Copy custom nginx configuration file
+# Copy custom nginx configuration file to container
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
 # Start nginx server
