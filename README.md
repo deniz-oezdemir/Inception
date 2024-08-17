@@ -2,6 +2,14 @@
 Building a small-scale infrastructure with Docker
 
 ## Useful Commands
+In e.g. the `wordpress` directory:
+- `docker build -t wordpress .`: build a Docker image with the tag "wordpress"
+- `docker run -d wordpress`: run a container based on the "wordpress" image in detached mode
+- `docker ps -a`: display the status of all containers, including the ones that are not running
+- `docker exec -it <copiedID> /bin/bash`: execute an interactive shell inside a running container
+- `docker rm -f $(docker ps -aq) &&  docker rmi -f $(docker images -aq)`: remove all containers and images
+
+In the directory containing the `docker-compose.yml` file:
 - `systemctl status docker`: check if Docker is running on your system
 - `docker compose up`: start the containers defined in your Docker Compose file
 - `docker compose ps`: display the status of the containers defined in your Docker Compose file
