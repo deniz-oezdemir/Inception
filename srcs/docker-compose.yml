@@ -10,8 +10,7 @@ services:
         - DOMAIN_NAME=${DOMAIN_NAME}
     image: nginx #assign the image name
     ports:
-      #- "443:443"
-      - "8080:8080"
+      - "443:443"
     restart: unless-stopped #restart container if crashes
     volumes:
       - wordpress:/var/www/html
