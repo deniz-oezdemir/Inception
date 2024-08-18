@@ -18,8 +18,19 @@ In the directory containing the `docker-compose.yml` file:
 - `docker compose down`: stop and remove the containers defined in your Docker Compose file
 - `docker compose down -v`: stop and remove the containers defined in your Docker Compose file, as well as remove any associated volumes
 
-# Sources
+## Evaluation
+- ToDo: learn how to delete previous config from VM after each eval
 
-https://github.com/waltergcc/42-inception?tab=readme-ov-file#1-the-containers
+### Project overview
+...
 
-https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+### Simple setup
+- Nginx port 443 only: check file server.conf
+- SSL/TLS: browser - lock in address bar - connection not secure - more information - technical details - ... TLS 1.3 ... (/View Certificate)
+
+### Docker basics
+tbd
+
+## Sources
+
+[Tutorial](https://github.com/waltergcc/42-inception?tab=readme-ov-file#1-the-containers)
