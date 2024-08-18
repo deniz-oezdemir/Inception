@@ -10,11 +10,15 @@ RUN		apt update && \
 		mariadb-server && \
 		rm -rf /var/lib/apt/lists/*
 
+# Copy the custom server configuration file
 COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
+# Copy the setup script to the /bin directory and make it executable
 COPY	tools/setup.sh /bin/
 RUN		chmod +x /bin/setup.sh
 
-ENTRYPOINT ["/bin/setup.sh"]
+# Set the entrypoint (for container configuration after it's setup) to run the setup script
+ENTRYPOINT	["/bin/setup.sh"]
 
-CMD		["setup.sh", "mysqld_safe"]
+# Set the default command to run mysqld_safe
+CMD			["setup.sh", "mysqld_safe"]

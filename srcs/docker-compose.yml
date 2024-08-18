@@ -1,4 +1,4 @@
-# containers --------------------------------------------------------------------
+# --- containers ---
 
 services:
 
@@ -15,7 +15,7 @@ services:
     env_file:
       - .env
 
-  # wordpress contaner depends on the mariadb container and is therefore created second
+  # wordpress container depends on the mariadb container and is therefore created second
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress/
@@ -38,7 +38,7 @@ services:
     build:
       context: ./requirements/nginx/
       args:
-        CERT_FOLDER: ${CERT_FOLDER}
+        CERTIFICATE_FOLDER: ${CERTIFICATE_FOLDER}
         CERTIFICATE: ${CERTIFICATE}
         KEY: ${KEY}
         COUNTRY: ${COUNTRY}
@@ -46,7 +46,7 @@ services:
         LOCALITY: ${LOCALITY}
         ORGANIZATION: ${ORGANIZATION}
         UNIT: ${UNIT}
-        COMMON_NAME: ${COMMON_NAME}
+        DOMAIN_NAME: ${DOMAIN_NAME}
     ports:
       - '443:443'
     volumes:
@@ -61,7 +61,7 @@ services:
       - wordpress
 
 
-# volumes --------------------------------------------------------------------
+# --- volumes ---
 
 # keep the data shared between the containers
 # act as a shared volume, allowing data to be accessed by multiple containers and the host machine
@@ -85,10 +85,10 @@ volumes:
       device: ~/data/wordpress_files
 
 
-# networks --------------------------------------------------------------------
+# --- networks ---
 
 # this network is used to connect the containers
-# tt acts like a virtual switch between the containers
+# it acts like a virtual switch between the containers
 # "all" is the name of the network
 # "bridge" is the type of the network
 networks:
