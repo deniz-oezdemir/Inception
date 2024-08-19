@@ -5,7 +5,8 @@ services:
   # mariadb container is independent of below containers and is therefore created first
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb/
+    image: mariadb #assign image name
+    build: ./requirements/mariadb/ #build image from Dockerfile
     volumes:
       - database:/var/lib/mysql/
     networks:
@@ -18,6 +19,7 @@ services:
   # wordpress container depends on the mariadb container and is therefore created second
   wordpress:
     container_name: wordpress
+    image: wordpress
     build: ./requirements/wordpress/
     volumes:
       - wordpress_files:/var/www/inception/
@@ -35,6 +37,7 @@ services:
   # this allows the Dockerfile to access the private information stored in the .env file
   nginx:
     container_name: nginx
+    image: nginx
     build:
       context: ./requirements/nginx/
       args:
