@@ -10,19 +10,31 @@ The project aims to build a small-scale infrastructure using Docker. It includes
 
 The Docker network used for this setup is named `inception_all` and is configured as a bridge network. It allows communication between the containers and assigns unique IPv4 addresses to each container within the network's subnet.
 
-To access the application, use the following URLs:
-- Port 80: http://localhost
-- Port 443: https://localhost
+To access the application, use https://localhost
+
+### Docker and Docker Compose
+Docker is a platform that allows you to package applications and their dependencies into containers. Containers are lightweight, portable, and can run on any system that has Docker installed. Docker Compose is a tool that allows you to define and manage multi-container Docker applications. With Docker Compose, you can use a YAML file to define the services, networks, and volumes for your application, and then start all the services with a single command.
+
+### Docker Image Used with Docker Compose and Without Docker Compose
+A Docker image is a standalone, executable package that includes everything needed to run a piece of software. When used with Docker Compose, images are defined in a `docker-compose.yml` file along with their configurations, dependencies, and networks. This allows you to manage and orchestrate multiple containers as a single application. Without Docker Compose, you would need to manually start and link each container using individual Docker commands, which can be more complex and error-prone.
+
+### Docker vs. VMs
+Docker containers are more lightweight and efficient compared to virtual machines (VMs). Containers share the host system's kernel and resources, which reduces overhead and allows for faster startup times. VMs, on the other hand, require a full operating system for each instance, which consumes more resources and takes longer to boot. Docker also provides better portability and consistency, as containers can run on any system with Docker installed, ensuring that applications behave the same in different environments.
+
+### Directory Structure
+The directory structure for this project is designed to organize the different components and configurations in a clear and maintainable way. For example, having separate directories for Nginx, WordPress, and MariaDB configurations helps to keep related files together and makes it easier to manage and update them. This structure also aligns with best practices for Docker projects, ensuring that each service has its own context and build configuration, which improves modularity and reusability.
 
 ## Configuration Details
 
-#### Setup
+### Setup
 - Nginx port 443 only: check file server.conf
-- SSL/TLS: browser - lock in address bar - connection not secure - more information - technical details - ... TLS 1.3 ... (/View Certificate)
+- SSL/TLS:
+    - browser - lock in address bar - connection not secure - more information - technical details - ... TLS 1.3 ... (/View Certificate)
+    - `openssl s_client -connect denizozd.42.fr:443` - check "SSL-session"
 - Docker images name: check in docker-compose.yml for "image: <name>" or after starting services use: `docker ps --format "table {{.Names}}\t{{.Image}}"` or `docker ps`
 - docker compose: Makefile - docker compose or Error
 
-#### Network
+### Network
 - docker-compose.yml: section "networks"
 - `docker network ls` output:
     - bridge: default network driver in Docker. Containers connected to this network can communicate with each other. Provides network isolation.
@@ -43,11 +55,10 @@ Data flow when accessing via a web browser:
 3. WordPress handles the request, which may involve querying the MariaDB.
 4. The response is sent back through the network, reaching Nginx, which forwards it back to the browser.
 
-#### NGINX
-- port 80:  http://localhost
-- port 443: https://localhost
-
-#### WordPress
+### NGINX
+- port 80:  http://localhost (should not work)
+- port 443: https://localhost (should work)
+### WordPress
 - volumes created in Makefile
 - `docker volume ls`
 - `docker volume inspect <volume name>`: check "device:"
@@ -56,7 +67,7 @@ Data flow when accessing via a web browser:
 - add comment: login - sidebar "Comments" - got to post with enabled comments - add comment
 - add page: login - sidebar "Pages" - Add New Page - edit page - "Publish"
 
-#### MariaDB
+### MariaDB
 Access database:
 - `docker ps -a`
 - `docker exec -it <copiedID> mysql -u <username> -p`
@@ -65,7 +76,7 @@ Access database:
 - `SHOW TABLES;`
 - e.g., `SELECT * FROM wp_comments;`
 
-#### Data Persistence
+### Data Persistence
 - `Ctrl + c` to stop containers
 - `sudo reboot`
 - login
@@ -88,6 +99,10 @@ In the directory containing the `docker-compose.yml` file:
 - docker rm
 - `docker compose down`: stop and remove the containers defined in your Docker Compose file
 - `docker compose down -v`: stop and remove the containers defined in your Docker Compose file, as well as remove any associated volumes
+
+In case of too little space
+- check disk space usage with `df -h`
+- clean stopped containers, dangling images, build cache with `docker system prune -a --volumes`
 
 ## Sources
 
