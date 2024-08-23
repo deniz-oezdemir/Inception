@@ -4,22 +4,26 @@ Building a small-scale infrastructure with Docker
 ## Project Overview
 The project aims to build a small-scale infrastructure using Docker. It includes the following components:
 
-- Nginx: Acts as the web server and forwards requests to WordPress.
-- WordPress: Functions as the content management system.
-- MariaDB: Serves as the database server.
-
-The Docker network used for this setup is named `inception_all` and is configured as a bridge network. It allows communication between the containers and assigns unique IPv4 addresses to each container within the network's subnet.
-
-To access the application, use https://localhost
+- Nginx as the web server
+- WordPress as the content management system
+- MariaDB as the database server
 
 ### Docker and Docker Compose
-Docker is a platform that allows you to package applications and their dependencies into containers. Containers are lightweight, portable, and can run on any system that has Docker installed. Docker Compose is a tool that allows you to define and manage multi-container Docker applications. With Docker Compose, you can use a YAML file to define the services, networks, and volumes for your application, and then start all the services with a single command.
+Docker is a platform that allows you to package applications and their dependencies into containers. Containers are lightweight, portable, and can run on any system that has Docker installed.
+
+Docker Compose is a tool that allows you to define and manage multi-container Docker applications. With Docker Compose, you can use a YAML file to define the services, networks, and volumes for your application, and then start all the services with a single command.
 
 ### Docker Image Used with Docker Compose and Without Docker Compose
 A Docker image is a standalone, executable package that includes everything needed to run a piece of software. When used with Docker Compose, images are defined in a `docker-compose.yml` file along with their configurations, dependencies, and networks. This allows you to manage and orchestrate multiple containers as a single application. Without Docker Compose, you would need to manually start and link each container using individual Docker commands, which can be more complex and error-prone.
 
 ### Docker vs. VMs
-Docker containers are more lightweight and efficient compared to virtual machines (VMs). Containers share the host system's kernel and resources, which reduces overhead and allows for faster startup times. VMs, on the other hand, require a full operating system for each instance, which consumes more resources and takes longer to boot. Docker also provides better portability and consistency, as containers can run on any system with Docker installed, ensuring that applications behave the same in different environments.
+Docker containers are more lightweight and efficient compared to virtual machines (VMs). Containers share the host system's kernel and resources, which reduces overhead and allows for faster startup times.
+
+VMs, on the other hand, require a full operating system for each instance, which consumes more resources and takes longer to boot.
+
+Docker also provides better portability and consistency, as containers can run on any system with Docker installed, ensuring that applications behave the same in different environments.
+
+![Docker vs VM](./Docker%20vs%20VM.png)
 
 ### Directory Structure
 The directory structure for this project is designed to organize the different components and configurations in a clear and maintainable way. For example, having separate directories for Nginx, WordPress, and MariaDB configurations helps to keep related files together and makes it easier to manage and update them. This structure also aligns with best practices for Docker projects, ensuring that each service has its own context and build configuration, which improves modularity and reusability.
@@ -35,6 +39,8 @@ The directory structure for this project is designed to organize the different c
 - docker compose: Makefile - docker compose or Error
 
 ### Network
+The Docker network used for this setup is named `inception_all` and is configured as a bridge network. It allows communication between the containers and assigns unique IPv4 addresses to each container within the network's subnet.
+
 - docker-compose.yml: section "networks"
 - `docker network ls` output:
     - bridge: default network driver in Docker. Containers connected to this network can communicate with each other. Provides network isolation.
@@ -101,9 +107,11 @@ In the directory containing the `docker-compose.yml` file:
 - `docker compose down -v`: stop and remove the containers defined in your Docker Compose file, as well as remove any associated volumes
 
 In case of too little space
+- stop and remove images, volumes, network with `docker stop $(docker ps -qa); docker rm $(docker ps -qa); docker rmi -f $(docker images -qa); docker volume rm $(docker volume ls -q); docker network rm $(docker network ls -q) 2>/dev/null`
 - check disk space usage with `df -h`
 - clean stopped containers, dangling images, build cache with `docker system prune -a --volumes`
 
 ## Sources
 
 [Tutorial](https://github.com/waltergcc/42-inception?tab=readme-ov-file#1-the-containers)
+[Containers vs. VMs](https://www.netapp.com/blog/containers-vs-vms/)
