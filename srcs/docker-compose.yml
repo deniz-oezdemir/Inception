@@ -1,34 +1,32 @@
 # --- containers ---
 
+# common properties of all services
+x-common: &common
+  env_file:
+    - .env
+  restart: on-failure
+  networks:
+    - net
+
 services:
 
   # mariadb container is independent of below containers and is therefore created first
   mariadb:
+    <<: *common
     container_name: mariadb
     image: mariadb #assign image name
     build: ./requirements/mariadb/ #build image from Dockerfile
     volumes:
       - database:/var/lib/mysql/
-    networks:
-      - all
-    init: true
-    restart: on-failure
-    env_file:
-      - .env
 
   # wordpress container depends on the mariadb container and is therefore created second
   wordpress:
+    <<: *common
     container_name: wordpress
     image: wordpress
     build: ./requirements/wordpress/
     volumes:
       - wordpress_files:/var/www/inception/
-    networks:
-      - all
-    init: true
-    restart: on-failure
-    env_file:
-      - .env
     depends_on:
       - mariadb
 
@@ -36,6 +34,7 @@ services:
   # it uses args to pass the certificate and key path to the Dockerfile
   # this allows the Dockerfile to access the private information stored in the .env file
   nginx:
+    <<: *common
     container_name: nginx
     image: nginx
     build:
@@ -54,15 +53,8 @@ services:
       - '443:443'
     volumes:
       - wordpress_files:/var/www/inception/
-    networks:
-      - all
-    init: true
-    restart: on-failure
-    env_file:
-      - .env
     depends_on:
       - wordpress
-
 
 # --- volumes ---
 
@@ -71,29 +63,28 @@ services:
 # device: specifies the location on the host machine where the data will be stored
 volumes:
 
-  # keeps the database
+  # mariadb
   database:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/database
+      device: ~/data/mariadb_data
 
-  # keeps the wordpress files
+  # wordpress
   wordpress_files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: ~/data/wordpress_files
-
+      device: ~/data/wordpress_data
 
 # --- networks ---
 
 # this network is used to connect the containers
 # it acts like a virtual switch between the containers
-# "all" is the name of the network
+# "net" is the name of the network
 # "bridge" is the type of the network
 networks:
-  all:
+  net:
     driver: bridge

@@ -1,6 +1,5 @@
-FROM	debian:bullseye
+FROM	debian:11
 
-# Expose port 443 for HTTPS as in subject's diagram
 EXPOSE	443
 
 # Update package lists and install nginx and openssl

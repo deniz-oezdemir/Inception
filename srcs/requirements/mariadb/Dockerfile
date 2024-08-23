@@ -1,7 +1,7 @@
 # Inherit from the official Debian image
-FROM	debian:bullseye
+FROM	debian:11
 
-# Set the port for the container to listen on
+# Set the port for the container to listen on as in subject
 EXPOSE	3306
 
 # Install MariaDB without any recommended or suggested packages to reduce image size
@@ -10,7 +10,7 @@ RUN		apt update && \
 		mariadb-server && \
 		rm -rf /var/lib/apt/lists/*
 
-# Copy the custom server configuration file
+# Copy the server configuration file
 COPY	conf/50-server.cnf /etc/mysql/mariadb.conf.d/
 
 # Copy the setup script to the /bin directory and make it executable

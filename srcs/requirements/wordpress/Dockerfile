@@ -18,7 +18,7 @@ RUN		apt update && apt install --no-install-recommends --no-install-suggests -y 
 # Stop the php7.4-fpm service to change it's configuration
 RUN		service php7.4-fpm stop
 
-# Copy the www.conf file to the PHP pool directory
+# Copy the PHP configuration file
 COPY	conf/www.conf ${PHPPATH}/pool.d/
 
 # Modify the php configuration and www.conf files

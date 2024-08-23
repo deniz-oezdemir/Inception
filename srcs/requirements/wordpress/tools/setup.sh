@@ -11,12 +11,11 @@ fi
 sleep 10
 
 # Download WordPress core files
-wp --allow-root --path="/var/www/inception/" core download || true
+wp --allow-root --path="/var/www/inception/" core download
 
-# Check if WordPress is already installed
+# Install wordpress if not already installed
 if ! wp --allow-root --path="/var/www/inception/" core is-installed;
 then
-     # Install WordPress
      wp  --allow-root --path="/var/www/inception/" core install \
           --url=$WP_SITE_URL \
           --title=$WP_TITLE \
@@ -25,10 +24,9 @@ then
           --admin_email=$WP_ADMIN_EMAIL
 fi;
 
-# Check if the specified user exists
+# Create user if does not exist yet
 if ! wp --allow-root --path="/var/www/inception/" user get $WP_USER_NAME;
 then
-     # Create a new user
      wp  --allow-root --path="/var/www/inception/" user create \
           $WP_USER_NAME \
           $WP_USER_EMAIL \

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Print all executed commands to terminal for debugging
-#set -x
-
-# Start the MariaDB service
 service mariadb start
 
 # Create the database and user
@@ -15,10 +11,8 @@ GRANT ALL PRIVILEGES ON $DB_NAME.* TO 'root'@'%' IDENTIFIED BY '$DB_PASSWORD_ROO
 SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$DB_PASSWORD_ROOT');
 EOF
 
-# Wait for 5 seconds
 sleep 5
 
-# Stop the MariaDB service
 service mariadb stop
 
 # Execute the command passed as arguments

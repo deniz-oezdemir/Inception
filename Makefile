@@ -1,28 +1,24 @@
 NAME		= inception
-SRCS		= ./srcs
-COMPOSE		= $(SRCS)/docker-compose.yml
 HOST_URL	= denizozd.42.fr
 
-all: $(NAME)
-
-$(NAME): up
-
-# Create directories for database and WordPress files
+# Create directories for mariadb and WordPress files
 # Add a host entry to redirect the HOST_URL to 127.0.0.1 loopback adress (allows to access local web server in browser - no external access)
-# Start the containers using docker-compose (-p to specify name); Error message in case of failure
+# Start the containers using docker-compose
 up:
-	mkdir -p ~/data/database
-	mkdir -p ~/data/wordpress_files
-	sudo hostsed add 127.0.0.1 $(HOST_URL) || (echo "\e[31mError: hostsed failed \e[0m" && exit 1)
-	docker compose -p $(NAME) -f $(COMPOSE) up --build || (echo "\e[31mError: docker compose failed \e[0m" && exit 1)
+	sudo mkdir -p ~/data/mariadb_data
+	sudo mkdir -p ~/data/wordpress_data
+	echo "127.0.0.1 $(HOST_URL)" | sudo tee -a /etc/hosts
+	docker compose -p $(NAME) -f ./srcs/docker-compose.yml up --build
 
 # Remove the host entry for HOST_URL
 # Stop and remove the containers
 down:
-	sudo hostsed rm 127.0.0.1 $(HOST_URL)
+	sudo sed -i "/127.0.0.1 $(HOST_URL)/d" /etc/hosts
 	docker compose -p $(NAME) down
 
 # Remove all data (Caution)
-# rm:
-# 	sudo rm -rf ~/data/wordpress_files/*
-# 	sudo rm -rf ~/data/database/*
+clean: down
+	docker compose -f srcs/docker-compose.yml rm -f
+	docker compose -f srcs/docker-compose.yml down --rmi all
+	sudo rm -rf ~/data/mariadb_data
+	sudo rm -rf ~/data/wordpress_data

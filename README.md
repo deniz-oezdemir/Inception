@@ -45,7 +45,7 @@ The Docker network used for this setup is named `inception_all` and is configure
 - `docker network ls` output:
     - bridge: default network driver in Docker. Containers connected to this network can communicate with each other. Provides network isolation.
     - host: removes network isolation between the container and the Docker host. Containers using the host network can directly access the host's networking stack.
-    - inception_all (docker compose automatically prefixes the network name with the project name): custom bridge network, likely created for your Inception project. It allows containers connected to it to communicate with each other, and it might be configured with specific settings for your project.
+    - inception_net (docker compose automatically prefixes the network name with the project name): custom bridge network, created for this Inception project. It allows containers connected to it to communicate with each other, and it might be configured with specific settings for your project.
     - none: provides no networking for the containers. It's used when you don't want the container to have any network access.
 
 `docker network inspect inception_all`: The Docker network used for this setup is named `inception_all`, configured as a bridge network. It contains three containers: `mariadb`, `wordpress`, and `nginx`, each assigned a unique IPv4 address within the network's subnet.
@@ -114,4 +114,7 @@ In case of too little space
 ## Sources
 
 [Tutorial](https://github.com/waltergcc/42-inception?tab=readme-ov-file#1-the-containers)
+
 [Containers vs. VMs](https://www.netapp.com/blog/containers-vs-vms/)
+
+[Hostsed](https://github.com/socrateslee/hostsed)
