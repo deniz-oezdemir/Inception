@@ -1,1 +1,2 @@
 #srcs/.env #do not commit .env file to school's repo
+#secretes/ #do not commit passwords to school's repo

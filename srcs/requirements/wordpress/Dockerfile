@@ -45,9 +45,6 @@ RUN		mkdir -p /run/php/ && \
 # Set ownership of /var/www/inception/ directory
 RUN		chown -R www-data:www-data /var/www/inception/
 
-# Copy the wp-config.php file to /tmp/
-COPY	conf/wp-config.php /tmp/
-
 # Copy the setup.sh script to /bin/ and make it executable
 COPY	tools/setup.sh /bin/
 RUN		chmod +x /bin/setup.sh
