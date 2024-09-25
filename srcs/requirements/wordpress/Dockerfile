@@ -45,9 +45,9 @@ RUN		mkdir -p /run/php/ && \
 # Set ownership of /var/www/inception/ directory
 RUN		chown -R www-data:www-data /var/www/inception/
 
-# Copy the setup.sh script to /bin/ and make it executable
-COPY	tools/setup.sh /bin/
-RUN		chmod +x /bin/setup.sh
+# Copy the setup_wp.sh script to /bin/ and make it executable
+COPY	tools/setup_wp.sh /bin/
+RUN		chmod +x /bin/setup_wp.sh
 
 # Execute the script, start the php server, set server to not run in background
-CMD		["setup.sh", "php-fpm7.4", "--nodaemonize"]
+CMD		["setup_wp.sh", "php-fpm7.4", "--nodaemonize"]

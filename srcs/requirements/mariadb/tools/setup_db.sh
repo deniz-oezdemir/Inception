@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Read passwords from files
+DB_PASSWORD=$(cat /run/secrets/db_password)
+DB_PASSWORD_ROOT=$(cat /run/secrets/db_password_root)
+
 service mariadb start
 
 # Create the database and user

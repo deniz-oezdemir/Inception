@@ -33,9 +33,10 @@ services:
     depends_on:
       - mariadb
     secrets:
-      - db_password
       - wp_admin_password
       - wp_user_password
+      - db_password
+
 
   # nginx container depends on the wordpress container
   # it uses args to pass the certificate and key path to the Dockerfile
