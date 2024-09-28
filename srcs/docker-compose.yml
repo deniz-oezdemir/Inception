@@ -64,6 +64,17 @@ services:
     depends_on:
       - wordpress
 
+  # redis container depends on the nginx container
+  redis:
+    <<: *common
+    container_name: redis
+    image: redis
+    init: true
+    build:
+      context: ./requirements/redis
+    depends_on:
+      - nginx
+
 
 # --- secrets ---
 # store passwords

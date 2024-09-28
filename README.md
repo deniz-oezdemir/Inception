@@ -1,6 +1,24 @@
 # Inception
 Building a small-scale infrastructure with Docker
 
+## Table of Contents
+- [Project Overview](#project-overview)
+- [Docker and Docker Compose](#docker-and-docker-compose)
+- [Docker Image Used with Docker Compose and Without Docker Compose](#docker-image-used-with-docker-compose-and-without-docker-compose)
+- [Docker vs. VMs](#docker-vs-vms)
+- [Directory Structure](#directory-structure)
+- [Configuration Details](#configuration-details)
+  - [Setup](#setup)
+  - [Network](#network)
+  - [NGINX](#nginx)
+  - [WordPress](#wordpress)
+  - [MariaDB](#mariadb)
+  - [Data Persistence](#data-persistence)
+- [Bonus](#bonus)
+  - [Redis](#redis)
+- [Useful Commands](#useful-commands)
+- [Sources](#sources)
+
 ## Project Overview
 The project aims to build a small-scale infrastructure using Docker. It includes the following components:
 
@@ -89,6 +107,25 @@ Access database:
 - `make`
 - check e.g. created pages, comments, etc.
 
+## Bonus
+
+### Redis
+- Redis is used as a database, cache, and message broker.
+- It stores data in memory, making it faster than traditional disk-based databases.
+- Redis is a key-value store, storing data in a dictionary-like structure.
+- It is great for caching, as it can store data in memory and retrieve it quickly.
+- In this project, we will build a Redis container and use it to cache API requests.
+- Caching requests will make the application faster by reducing the number of database queries.
+
+- Verify Redis is running with `redis-cli`:
+  - `docker exec -it redis redis-cli`
+  - `MONITOR`
+- Edit or add content on your WordPress site to see logs in the terminal. If logs appear, Redis is capturing database requests, indicating it's working as a cache.
+- Check Redis info or keys:
+  - `docker exec -it redis redis-cli`
+  - `INFO`
+  - `KEYS *`
+
 ## Useful Commands
 In e.g. the `wordpress` directory:
 - `docker build -t wordpress .`: build a Docker image with the tag "wordpress"
@@ -113,7 +150,9 @@ In case of too little space
 
 ## Sources
 
-[Tutorial](https://github.com/waltergcc/42-inception?tab=readme-ov-file#1-the-containers)
+[Tutorial for the mandatory part](https://github.com/waltergcc/42-inception/blob/main/README.md)
+
+[Tutorial for the bonus part](https://github.com/caroldaniel/42sp-cursus-inception/blob/main/guides/Bonus-en.md)
 
 [Containers vs. VMs](https://www.netapp.com/blog/containers-vs-vms/)
 

@@ -22,3 +22,7 @@ clean: down
 	docker compose -f srcs/docker-compose.yml down --rmi all
 	sudo rm -rf ~/data/mariadb_data
 	sudo rm -rf ~/data/wordpress_data
+
+# Clean stopped containers, dangling images, build cache
+prune: clean
+	docker system prune -a --volumes -f

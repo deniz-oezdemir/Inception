@@ -12,8 +12,12 @@ RUN		apt update && apt install --no-install-recommends --no-install-suggests -y 
 		php7.4-fpm \
 		php7.4-mysql \
 		wget \
-		tar && \
+		tar \
+		default-mysql-client && \
 		rm -rf /var/lib/apt/lists/*
+
+# Redis
+RUN		apt update && apt install -y php7.4-redis redis-tools
 
 # Stop the php7.4-fpm service to change it's configuration
 RUN		service php7.4-fpm stop

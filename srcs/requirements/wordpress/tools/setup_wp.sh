@@ -34,6 +34,11 @@ define('DB_COLLATE', ''); // Database collation
 
 define('WP_DEBUG', true); // Enable WordPress debugging
 
+// Redis Cache Configuration
+define('WP_REDIS_PORT', 6379);
+define('WP_REDIS_HOST', 'redis');
+define('WP_CACHE', true);
+
 if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/'); // Absolute path to the WordPress directory
 }
@@ -66,6 +71,14 @@ then
           --user_pass=$WP_USER_PASSWORD \
           --role=$WP_USER_ROLE
 fi;
+
+# Enable Redis Cache after Database is ready
+while ! wp db check --allow-root --path=/var/www/inception/; do
+    echo "Waiting for Database to be ready..."
+    sleep 1
+done
+wp plugin install redis-cache --activate --allow-root --path=/var/www/inception/
+wp redis enable --allow-root --path=/var/www/inception/
 
 # Install and activate the "raft" theme
 wp --allow-root --path="/var/www/inception/" theme install raft --activate
