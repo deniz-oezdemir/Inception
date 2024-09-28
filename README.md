@@ -16,6 +16,7 @@ Building a small-scale infrastructure with Docker
   - [Data Persistence](#data-persistence)
 - [Bonus](#bonus)
   - [Redis](#redis)
+  - [Static website](#static-website)
 - [Useful Commands](#useful-commands)
 - [Sources](#sources)
 
@@ -126,7 +127,7 @@ Access database:
   - `INFO`
   - `KEYS *`
 
-### Redis
+### Static website
 - Static website hosted by nginx as a new server can be accessed via `http://dog.42.fr:8080/` and `http://localhost:8080/`.
 
 ## Useful Commands
