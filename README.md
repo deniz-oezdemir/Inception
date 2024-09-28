@@ -126,6 +126,9 @@ Access database:
   - `INFO`
   - `KEYS *`
 
+### Redis
+- Static website hosted by nginx as a new server can be accessed via `http://dog.42.fr:8080/` and `http://localhost:8080/`.
+
 ## Useful Commands
 In e.g. the `wordpress` directory:
 - `docker build -t wordpress .`: build a Docker image with the tag "wordpress"

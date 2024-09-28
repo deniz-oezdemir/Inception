@@ -58,11 +58,14 @@ services:
         UNIT: ${UNIT}
         DOMAIN_NAME: ${DOMAIN_NAME}
     ports:
+      - "8080:8080"
       - '443:443'
     volumes:
       - wordpress_files:/var/www/inception/
+      - website_files:/var/www/website/
     depends_on:
       - wordpress
+      - website
 
   # redis container depends on the nginx container
   redis:
@@ -74,6 +77,18 @@ services:
       context: ./requirements/redis
     depends_on:
       - nginx
+
+  # static website
+  website:
+    <<: *common
+    container_name: website
+    image: website
+    init: true
+    build:
+      context: ./requirements/website/
+      dockerfile: Dockerfile
+    volumes:
+      - website_files:/var/www/website/
 
 
 # --- secrets ---
@@ -112,6 +127,14 @@ volumes:
       type: none
       o: bind
       device: ~/data/wordpress_data
+
+  # website
+  website_files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ~/data/website_data
 
 # --- networks ---
 

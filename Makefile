@@ -7,12 +7,15 @@ HOST_URL	= denizozd.42.fr
 up:
 	sudo mkdir -p ~/data/mariadb_data
 	sudo mkdir -p ~/data/wordpress_data
+	sudo mkdir -p ~/data/website_data
+	echo "127.0.0.1 dog.42.fr" | sudo tee -a /etc/hosts
 	echo "127.0.0.1 $(HOST_URL)" | sudo tee -a /etc/hosts
 	docker compose -p $(NAME) -f ./srcs/docker-compose.yml up --build
 
 # Remove the host entry for HOST_URL
 # Stop and remove the containers
 down:
+	sudo sed -i "/127.0.0.1 dog.42.fr/d" /etc/hosts
 	sudo sed -i "/127.0.0.1 $(HOST_URL)/d" /etc/hosts
 	docker compose -p $(NAME) down
 
@@ -22,6 +25,7 @@ clean: down
 	docker compose -f srcs/docker-compose.yml down --rmi all
 	sudo rm -rf ~/data/mariadb_data
 	sudo rm -rf ~/data/wordpress_data
+	sudo rm -rf ~/data/website_data
 
 # Clean stopped containers, dangling images, build cache
 prune: clean
