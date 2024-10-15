@@ -1,7 +1,7 @@
 # Inception
 
 ## Project Overview
-Inception is a project aimed at building a small-scale infrastructure using Docker. The project utilizes the LEMP stack, which includes the following components.
+Inception is a project aimed at building a small-scale infrastructure using Docker. It utilizes the LEMP stack, which includes the following components.
 
 ## Components
 - **Linux**: The base operating system for all containers.
@@ -30,7 +30,7 @@ To set up the project, follow these steps:
     ```
 
 3. **Access the services**:
-    - WordPress: `https://localhost` or login via: `https://localhost/wp-login.php`
+    - WordPress: `https://localhost` or login via `https://localhost/wp-login.php`
     - Static Website: `http://dog.42.fr:8080/` or `http://localhost:8080/`
 
 ## Useful Commands
