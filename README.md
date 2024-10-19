@@ -1,6 +1,6 @@
 # Inception
 
-## Project Overview
+## Summary
 Inception is a project aimed at building a small-scale infrastructure using Docker. It utilizes the LEMP stack, which includes the following components.
 
 ## Components
