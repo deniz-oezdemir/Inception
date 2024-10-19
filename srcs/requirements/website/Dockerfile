@@ -1,4 +1,4 @@
-FROM	debian:11
+FROM		debian:11
 
 EXPOSE	8080
 
@@ -6,10 +6,13 @@ EXPOSE	8080
 RUN			mkdir -p /var/www/website
 
 # Set the working directory
-WORKDIR		/var/www/website
+WORKDIR	/var/www/website
 
 # Copy the website source code
 COPY		./srcs/* /var/www/website/
 
-# Keep the container running
-CMD ["tail", "-f", "/dev/null"]
+# Install busybox
+RUN			apt update && apt install -y busybox
+
+# Start busybox HTTP server
+CMD			["busybox", "httpd", "-f", "-p", "8080"]

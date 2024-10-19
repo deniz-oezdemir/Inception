@@ -58,7 +58,7 @@ The directory structure for this project is designed to organize the different c
 - docker compose: Makefile - docker compose or Error
 
 ### Network
-The Docker network used for this setup is named `inception_all` and is configured as a bridge network. It allows communication between the containers and assigns unique IPv4 addresses to each container within the network's subnet.
+The Docker network used for this setup is named `inception_net` and is configured as a bridge network. It allows communication between the containers and assigns unique IPv4 addresses to each container within the network's subnet.
 
 - docker-compose.yml: section "networks"
 - `docker network ls` output:
@@ -67,7 +67,7 @@ The Docker network used for this setup is named `inception_all` and is configure
     - inception_net (docker compose automatically prefixes the network name with the project name): custom bridge network, created for this Inception project. It allows containers connected to it to communicate with each other, and it might be configured with specific settings for your project.
     - none: provides no networking for the containers. It's used when you don't want the container to have any network access.
 
-`docker network inspect inception_all`: The Docker network used for this setup is named `inception_all`, configured as a bridge network. It contains three containers: `mariadb`, `wordpress`, and `nginx`, each assigned a unique IPv4 address within the network's subnet.
+`docker network inspect inception_net`: The Docker network used for this setup is named `inception_net`, configured as a bridge network. It contains three containers: `mariadb`, `wordpress`, and `nginx`, each assigned a unique IPv4 address within the network's subnet.
 - mariadb serves as the database server
 - wordpress functions as the content management system
 - nginx acts as the web server that forwards requests to wordpress
@@ -162,3 +162,5 @@ In case of too little space
 [Containers vs. VMs](https://www.netapp.com/blog/containers-vs-vms/)
 
 [Hostsed](https://github.com/socrateslee/hostsed)
+
+[Secrets vs. .env](https://stackoverflow.com/questions/44615837/why-is-docker-secrets-more-secure-than-environment-variables)
